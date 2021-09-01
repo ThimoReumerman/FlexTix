@@ -1,7 +1,8 @@
+import mongoose from "../mongoose";
 import { Schema } from "mongoose";
 
 // Document interface
-interface Artist {
+export interface IArtist {
     name: string,
     bio: string,
     media: [{
@@ -12,7 +13,7 @@ interface Artist {
 }
 
 // Create Mongoose schema
-const schema = new Schema<Artist>({
+const schema: mongoose.Schema<IArtist> = new Schema<IArtist>({
     name: {type: String, required: true},
     bio: {type: String, required: true},
     media: [{
@@ -22,4 +23,6 @@ const schema = new Schema<Artist>({
     }]
 });
 
-export default schema;
+const model: mongoose.Model<IArtist, any, any> = mongoose.model("Artist", schema);
+
+export default model;

@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 // Document interface
@@ -20,4 +21,4 @@ const schema = new Schema<User>({
     }]
 });
 
-export default schema;
+export default mongoose.model("User", schema);

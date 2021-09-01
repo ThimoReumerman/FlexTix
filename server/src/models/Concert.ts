@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 // Document interface
@@ -33,4 +34,4 @@ const schema = new Schema<Concert>({
     }]
 });
 
-export default schema;
+export default mongoose.model("Concert", schema);
