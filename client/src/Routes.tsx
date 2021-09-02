@@ -5,8 +5,9 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import NavBar, { NavBarProps } from './components/NavBar';
 
 import Home, {HomeNav} from "./routes/Home";
+import LastMinute from './routes/LastMinute';
 import Artist from "./routes/Artist";
-import Welcome from "./routes/Welcome";
+import Dashboard from './routes/Dashboard';
 
 type NavState = {
     navItems: NavBarProps
@@ -27,38 +28,33 @@ class Routes extends Component<{}, NavState>  {
         return (
             <div>
             <NavBar items={this.state.navItems.items} />
-            <Switch>
-                <Route 
-                    exact 
-                    path="/home"
-                    render={
-                        () => (
-                            <Home navHandler={this.navHandler.bind(this)} />
-                        )
-                    }
-                 />
-                <Route 
-                    exact 
-                    path="/welcome"
-                    render={
-                        () => (
-                            <Welcome navHandler={this.navHandler.bind(this)} />
-                        )
-                    }
-                 />
-                <Route 
-                    exact 
-                    path="/artist/:_id"
-                    render={
-                        () => (
-                            <Artist navHandler={this.navHandler.bind(this)} />
-                        )
-                    }
-                 />
-                <Route exact path="/">
-                <Redirect to="/home" />
-                </Route>
-            </Switch>
+            <div id="content">
+                <Switch>
+                    <Route 
+                        exact 
+                        path="/home"
+                        render={() => (<Home navHandler={this.navHandler.bind(this)} />)}
+                    />
+                    <Route 
+                        exact 
+                        path="/last-minute"
+                        render={() => (<LastMinute navHandler={this.navHandler.bind(this)} />)}
+                    />
+                    <Route 
+                        exact 
+                        path="/dashboard"
+                        render={() => (<Dashboard navHandler={this.navHandler.bind(this)} />)}
+                    />
+                    <Route 
+                        exact 
+                        path="/artist/:_id"
+                        render={() => (<Artist navHandler={this.navHandler.bind(this)} />)}
+                    />
+                    <Route exact path="/">
+                    <Redirect to="/home" />
+                    </Route>
+                </Switch>
+            </div>
             </div>
             )
     }

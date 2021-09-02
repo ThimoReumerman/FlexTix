@@ -19,7 +19,8 @@ const schema: mongoose.Schema<IArtist> = new Schema<IArtist>({
     media: [{
         alt: {type: String, required: true},
         description: {type: String, required: false},
-        path: {type: String, required: true}
+        path: {type: String, required: true},
+        type: {type: String, required: true}
     }]
 });
 

@@ -1,9 +1,12 @@
 import { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-// Get API request impors
+// Get API request imports
 import axios, {AxiosResponse} from 'axios';
 import apiLink from '../api';
+
+// Import React Player
+import ReactPlayer from 'react-player';
 
 
 import { NavBarProps } from "../components/NavBar";
@@ -12,15 +15,14 @@ import IArtist, { EmptyArtist } from '../interfaces/Artist';
 export const ArtistNav: NavBarProps = {
     items: [
         {
-            href: "./home",
+            href: "/home",
             title: "Home"
         }, 
         {
-            href: "./welcome",
             title: "Welcome"
         },
         {
-            href: "./lastMinute",
+            href: "/last-minute",
             title: "Last Minute"
         }
     ]
@@ -63,10 +65,25 @@ class Artist extends Component<IProps & RouteComponentProps, IState> {
 
     }
 
+
+
     render() {
+        const artist: IArtist = this.state.artist;
+
         return (
-            <div>
-                <h2>{this.state.artist.name}</h2>
+            <div id="artist">
+                <h2>{artist.name}</h2>
+                <p>{artist.bio}</p>
+                {artist.media?.map(item => {
+                    switch (item.type) {
+                        case "image":
+                            return (<img src={item.path} alt={item.alt} />);
+                        case "video":
+                            return (<ReactPlayer url={item.path} />)
+                        default: 
+                            return (<div className="noPath" />)
+                    }
+                })}
             </div>
         )
     }

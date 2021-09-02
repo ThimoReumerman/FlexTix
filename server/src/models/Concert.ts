@@ -30,7 +30,8 @@ const schema = new Schema<IConcert>({
     media: [{
         alt: {type: String, required: true},
         description: {type: String, required: false},
-        path: {type: String, required: false}
+        path: {type: String, required: true},
+        type: {type: String, required: true}
     }]
 });
 

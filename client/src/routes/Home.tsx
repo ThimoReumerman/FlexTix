@@ -5,15 +5,14 @@ import { NavBarProps } from "../components/NavBar";
 export const HomeNav: NavBarProps = {
     items: [
         {
-            href: "./home",
+            href: "/home",
             title: "Home"
         }, 
         {
-            href: "./welcome",
             title: "Welcome"
         },
         {
-            href: "./lastMinute",
+            href: "/last-minute",
             title: "Last Minute"
         }
     ]
@@ -32,8 +31,11 @@ export default class Home extends Component<HomeProps> {
 
     render() {
         return (
-            <div>
-                <h1>Hello!</h1>
+            <div id="home">
+                <h2>Welcome to Flextix</h2>
+                <p className="bigdesc">Looking for last-minute concert tickets?</p>
+                <p className="smalldesc">We got you.</p>
+                <a href="./last-minute">Explore concerts</a>
             </div>
         )
     }

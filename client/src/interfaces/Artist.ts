@@ -5,7 +5,8 @@ export default interface IArtist {
     media?: [{
         alt: string,
         description: string,
-        path: string
+        path: string,
+        type: string
     }]
 }
 
