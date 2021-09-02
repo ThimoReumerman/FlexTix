@@ -17,6 +17,7 @@ const PORT: number = 5000;
 const app: Application = express();
 
 // Body parsing middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

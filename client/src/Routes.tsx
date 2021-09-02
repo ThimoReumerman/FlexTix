@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import NavBar, { NavBarProps } from './components/NavBar';
 
 import Home, {HomeNav} from "./routes/Home";
+import Artist from "./routes/Artist";
 import Welcome from "./routes/Welcome";
 
 type NavState = {
@@ -42,6 +43,15 @@ class Routes extends Component<{}, NavState>  {
                     render={
                         () => (
                             <Welcome navHandler={this.navHandler.bind(this)} />
+                        )
+                    }
+                 />
+                <Route 
+                    exact 
+                    path="/artist/:_id"
+                    render={
+                        () => (
+                            <Artist navHandler={this.navHandler.bind(this)} />
                         )
                     }
                  />
