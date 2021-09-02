@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 // Document interface
-interface Concert {
+export interface IConcert {
     title: string,
     description: string,
     genre: string,
@@ -19,7 +19,7 @@ interface Concert {
 }
 
 // Create Mongoose schema
-const schema = new Schema<Concert>({
+const schema = new Schema<IConcert>({
     title: {type: String, required: true},
     description: {type: String, required: false},
     price: {type: Number, required: true},

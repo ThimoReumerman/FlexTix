@@ -6,4 +6,6 @@ var db: string = "mongodb+srv://admin:myAdminPassword@flextixcluster.iwrmh.mongo
 // Create connection
 mongoose.connect(db);
 
+// console.log(mongoose.connection);
+
 export default mongoose;

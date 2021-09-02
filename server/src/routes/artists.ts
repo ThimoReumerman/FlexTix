@@ -3,7 +3,24 @@ import express, {Application, Request, Response, NextFunction, Router, request} 
 // Import Artist model
 import Artist, {IArtist} from "../models/Artist";
 
+// Set router
 var router: Router = express.Router();
+
+// Create new artist
+router.post("/", async (req: Request, res: Response) => {
+
+    // Create new artist variable
+    const artist = new Artist(req.body);
+
+    // Try saving the artist to the database
+    try {
+        const savedArtist = await artist.save();
+    
+        return res.status(200).json(savedArtist);
+    } catch (err) {
+        return res.status(400).send("Couldn't save artist.")
+    }
+});
 
 // Get all artists
 router.get("/", async (req: Request, res: Response) => {
@@ -29,19 +46,33 @@ router.get("/:_id", async (req: Request, res: Response) => {
     }
 });
 
-// Create new artist
-router.post("/", async (req: Request, res: Response) => {
+// Update artist
+router.put("/:_id", async (req: Request, res: Response) => {
 
-    // Create new artist variable
-    const artist = new Artist(req.body);
-
-    // Try saving the artist to the database
     try {
-        const savedArtist = await artist.save();
-    
-        return res.sendStatus(200).json(savedArtist);
+        // Create the updated artist variable
+        const artist: IArtist = req.body;
+
+        const updatedArtist = await Artist.findOneAndUpdate({_id: req.params._id}, artist);
+
+        return res.status(200).json(updatedArtist);
     } catch (err) {
-        return res.sendStatus(400).send("Couldn't save artist.")
+        // console.log(err);
+        return res.status(400).send("Couldn't update artist");
+    }
+});
+
+// Delete artist
+router.put("/:_id", async (req: Request, res: Response) => {
+
+    // Try deleting artist from database
+    try {
+        const deletedArtist = await Artist.findOneAndDelete({_id: req.params._id});
+
+        return res.status(200).json(deletedArtist);
+    } catch (err) {
+        // console.log(err);
+        return res.status(400).send("Couldn't update artist");
     }
 });
 

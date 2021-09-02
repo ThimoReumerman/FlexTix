@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 // Document interface
-interface User {
+export interface IUser {
     firebaseId: string,
     admin: boolean,
     tickets: [{
@@ -12,7 +12,7 @@ interface User {
 }
 
 // Create Mongoose schema
-const schema = new Schema<User>({
+const schema = new Schema<IUser>({
     firebaseId: {type: String, required: true},
     admin: {type: Boolean, required: true, default: false},
     tickets: [{
