@@ -29,9 +29,16 @@ nav {
 }
 
 // DASHBOARD
+$dashboardNavWidth: 200px;
+
 #dashboardNav {
     height: 100%;
-    width: 200px;
+    width: $dashboardNavWidth;
     background-color: darkgray;
     position: fixed;
+}
+
+#dashboardContent {
+    position: fixed;
+    margin-left: $dashboardNavWidth;
 }

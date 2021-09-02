@@ -1,12 +1,8 @@
 import { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-// Get API request impors
-import axios, {AxiosResponse} from 'axios';
-import apiLink from '../api';
-
-
 import { NavBarProps } from "../components/NavBar";
+import ArtistForm from "../components/forms/ArtistForm";
 
 export const DashboardNav: NavBarProps = {
     items: [
@@ -48,6 +44,9 @@ class LastMinute extends Component<IProps & RouteComponentProps, IState> {
             <div id="dashboard">
                 <div id="dashboardNav">
                     
+                </div>
+                <div id="dashboardContent">
+                    <ArtistForm />  
                 </div>
             </div>
         )
