@@ -63,7 +63,7 @@ router.put("/:_id", async (req: Request, res: Response) => {
 });
 
 // Delete user
-router.put("/:_id", async (req: Request, res: Response) => {
+router.delete("/:_id", async (req: Request, res: Response) => {
 
     // Try deleting user from database
     try {

@@ -64,7 +64,7 @@ router.put("/:_id", async (req: Request, res: Response) => {
 });
 
 // Delete concert
-router.put("/:_id", async (req: Request, res: Response) => {
+router.delete("/:_id", async (req: Request, res: Response) => {
 
     // Try deleting concert from database
     try {

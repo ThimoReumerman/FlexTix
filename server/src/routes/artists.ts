@@ -64,7 +64,7 @@ router.put("/:_id", async (req: Request, res: Response) => {
 });
 
 // Delete artist
-router.put("/:_id", async (req: Request, res: Response) => {
+router.delete("/:_id", async (req: Request, res: Response) => {
 
     // Try deleting artist from database
     try {
