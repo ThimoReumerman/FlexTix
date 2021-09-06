@@ -30,11 +30,11 @@ class ArtistForm extends Component<IProps, IState> {
             <form id="artistForm">
                 <label>
                     Name
-                    <input type="text" />
+                    <input type="text" value={this.state?.artist?.name} />
                 </label>
                 <label>
                     Bio
-                    <input type="text" />
+                    <textarea value={this.state?.artist?.bio}/>
                 </label>
             </form>
 
