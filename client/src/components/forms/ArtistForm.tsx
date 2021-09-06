@@ -5,6 +5,8 @@ import apiLink from '../../api';
 
 import IArtist from "../../interfaces/Artist";
 
+import MediaForm from "../forms/MediaForm";
+
 interface IProps {
     _id?: string
 }
@@ -36,6 +38,7 @@ class ArtistForm extends Component<IProps, IState> {
                     Bio
                     <textarea value={this.state?.artist?.bio}/>
                 </label>
+                <MediaForm />
             </form>
 
         )

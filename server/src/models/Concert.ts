@@ -11,10 +11,8 @@ export interface IConcert {
     artists: [{
         artistId: string
     }],
-    media: [{
-        alt: string,
-        description: string,
-        path: string
+    media?: [{
+        mediaId: string
     }]
 }
 
@@ -28,10 +26,7 @@ const schema = new Schema<IConcert>({
         artistId: {type: String, required: true}
     }],
     media: [{
-        alt: {type: String, required: true},
-        description: {type: String, required: false},
-        path: {type: String, required: true},
-        type: {type: String, required: true}
+        mediaId: {type: String, required: true}
     }]
 });
 

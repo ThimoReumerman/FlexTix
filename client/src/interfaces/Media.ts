@@ -1,7 +1,7 @@
 export enum MediaType {
+    None,
     Image,
-    Video,
-    None
+    Video
 }
 
 export default interface IMedia {
@@ -16,4 +16,8 @@ export const EmptyMedia: IMedia = {
     description: "",
     path: "",
     type: MediaType.None
+}
+
+export const UploadMedia = async (media: IMedia): Promise<void> => {
+    
 }

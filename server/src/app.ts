@@ -2,6 +2,7 @@ import express, {Application, Request, Response, NextFunction} from 'express';
 import cors from 'cors';
 
 // Import routes
+import media from "./routes/media";
 import artists from "./routes/artists";
 import concerts from "./routes/concerts";
 import users from "./routes/users";
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Use routes
+app.use('/media', media);
 app.use('/artists', artists);
 app.use('/concerts', concerts);
 

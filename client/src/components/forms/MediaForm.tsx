@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import axios, { AxiosResponse } from 'axios';
 import apiLink from '../../api';
@@ -11,23 +11,29 @@ interface IProps {
 
 class MediaForm extends Component<IProps> {
     async componentDidMount() {
-
         console.log("Component did mount.");
+    }
+
+    async handleSubmit (event: React.FormEvent<HTMLFormElement>): Promise<void> {
+        // Prevent the page from refreshing
+        event.preventDefault();
+
+        // Upload media to localhost
+
     }
 
     render() {
         return (
-            <form id="mediaForm">
-                <label>
+            <form id="mediaForm" onSubmit={this.handleSubmit}>
+                <label htmlFor="description">
                     Description
-                    <input type="text" value={this.props.media?.description} />
                 </label>
-                <label>
+                <input id="description" type="text" value={this.props.media?.description} />
+                <label htmlFor="alt">
                     Alt
-                    <textarea value={this.props.media?.alt}/>
                 </label>
+                <input id="alt" type="text" value={this.props.media?.alt} />
             </form>
-
         )
     }
 }
