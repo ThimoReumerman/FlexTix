@@ -1,16 +1,25 @@
 import express, {Application, Request, Response, NextFunction, Router, request} from 'express';
+import mongoose from 'mongoose';
 
 // Import Media model
 import Media, {IMedia} from "../models/Media";
+
+import upload from "../middleware/upload";
 
 // Set router
 var router: Router = express.Router();
 
 // Create new media
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", upload.single("image"), async (req: Request, res: Response) => {
+
+    // Extract media from body
+    let mediaBody: IMedia = req.body;
+    mediaBody.path = req.file!.filename!;
+
+    console.log(req.file);
 
     // Create new media variable
-    const media = new Media(req.body);
+    const media: mongoose.Document<IMedia> = new Media(mediaBody);
 
     // Try saving the media to the database
     try {
@@ -18,6 +27,7 @@ router.post("/", async (req: Request, res: Response) => {
     
         return res.status(200).json(savedMedia);
     } catch (err) {
+        console.log(err);
         return res.status(400).send("Couldn't save media.")
     }
 });
@@ -50,8 +60,12 @@ router.get("/:_id", async (req: Request, res: Response) => {
 router.put("/:_id", async (req: Request, res: Response) => {
 
     try {
+        // Extract media from body
+        let mediaBody: IMedia = req.body;
+        mediaBody.path = req.file!.filename!;
+
         // Create the updated media variable
-        const media: IMedia = req.body;
+        const media: IMedia = mediaBody;
 
         const updatedMedia = await Media.findOneAndUpdate({_id: req.params._id}, media);
 

@@ -2,6 +2,7 @@ import express, {Application, Request, Response, NextFunction, Router, request} 
 
 // Import Concert model
 import Concert, {IConcert} from "../models/Concert";
+import mongoose from '../mongoose';
 
 // Set router
 var router: Router = express.Router();
@@ -10,7 +11,7 @@ var router: Router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
 
     // Create new concert variable
-    const concert = new Concert(req.body);
+    const concert: mongoose.Document<IConcert> = new Concert(req.body);
 
     // Try saving the concert to the database
     try {

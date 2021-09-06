@@ -22,6 +22,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Let express use uploads folder
+app.use(express.static('public'));
+
 // Use routes
 app.use('/media', media);
 app.use('/artists', artists);
@@ -32,4 +35,4 @@ app.get('/', (req: Request, res: Response) => {
     res.send("Hello");
 });
 
-app.listen(PORT, () => console.log("Server running"));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -2,6 +2,7 @@ import express, {Application, Request, Response, NextFunction, Router, request} 
 
 // Import Artist model
 import Artist, {IArtist} from "../models/Artist";
+import mongoose from '../mongoose';
 
 // Set router
 var router: Router = express.Router();
@@ -10,7 +11,7 @@ var router: Router = express.Router();
 router.post("/", async (req: Request, res: Response) => {
 
     // Create new artist variable
-    const artist = new Artist(req.body);
+    const artist: mongoose.Document<IArtist> = new Artist(req.body);
 
     // Try saving the artist to the database
     try {
