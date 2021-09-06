@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import Media, {IMedia} from "../models/Media";
 
 import upload from "../middleware/upload";
+import mediaPath from '../mediaPath';
 
 // Set router
 var router: Router = express.Router();
@@ -14,9 +15,7 @@ router.post("/", upload.single("image"), async (req: Request, res: Response) => 
 
     // Extract media from body
     let mediaBody: IMedia = req.body;
-    mediaBody.path = req.file!.filename!;
-
-    console.log(req.file);
+    mediaBody.path = `${mediaPath}${req.file!.filename!}`;
 
     // Create new media variable
     const media: mongoose.Document<IMedia> = new Media(mediaBody);
@@ -27,7 +26,6 @@ router.post("/", upload.single("image"), async (req: Request, res: Response) => 
     
         return res.status(200).json(savedMedia);
     } catch (err) {
-        console.log(err);
         return res.status(400).send("Couldn't save media.")
     }
 });
@@ -62,7 +60,7 @@ router.put("/:_id", async (req: Request, res: Response) => {
     try {
         // Extract media from body
         let mediaBody: IMedia = req.body;
-        mediaBody.path = req.file!.filename!;
+        mediaBody.path = `${mediaPath}/${req.file!.filename!}`;
 
         // Create the updated media variable
         const media: IMedia = mediaBody;
@@ -71,13 +69,13 @@ router.put("/:_id", async (req: Request, res: Response) => {
 
         return res.status(200).json(updatedMedia);
     } catch (err) {
-        // console.log(err);
+
         return res.status(400).send("Couldn't update media");
     }
 });
 
 // Delete media
-router.put("/:_id", async (req: Request, res: Response) => {
+router.delete("/:_id", async (req: Request, res: Response) => {
 
     // Try deleting media from database
     try {
@@ -85,7 +83,6 @@ router.put("/:_id", async (req: Request, res: Response) => {
 
         return res.status(200).json(deletedMedia);
     } catch (err) {
-        // console.log(err);
         return res.status(400).send("Couldn't update media");
     }
 });
