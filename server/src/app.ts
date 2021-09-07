@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Let express use uploads folder
+// Let express use public folder
 app.use(express.static('public'));
 
 // Use routes

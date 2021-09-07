@@ -29,17 +29,19 @@ class ArtistForm extends Component<IProps, IState> {
 
     render() {
         return (
-            <form id="artistForm">
-                <label>
-                    Name
-                    <input type="text" value={this.state?.artist?.name} />
-                </label>
-                <label>
-                    Bio
-                    <textarea value={this.state?.artist?.bio}/>
-                </label>
+            <div>
+                <form id="artistForm">
+                    <label htmlFor="artistName">
+                        Name
+                        <input id="artistName" type="text" name="name" value={this.state?.artist?.name} />
+                    </label>
+                    <label htmlFor="artistBio">
+                        Bio
+                        <textarea id="artistBio" name="bio" value={this.state?.artist?.bio}/>
+                    </label>
+                </form>
                 <MediaForm />
-            </form>
+            </div>
 
         )
     }

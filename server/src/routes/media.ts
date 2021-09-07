@@ -11,10 +11,11 @@ import mediaPath from '../mediaPath';
 var router: Router = express.Router();
 
 // Create new media
-router.post("/", upload.single("image"), async (req: Request, res: Response) => {
+router.post("/", upload.single("upload"), async (req: Request, res: Response) => {
 
     // Extract media from body
     let mediaBody: IMedia = req.body;
+
     mediaBody.path = `${mediaPath}${req.file!.filename!}`;
 
     // Create new media variable

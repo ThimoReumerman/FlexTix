@@ -10,10 +10,10 @@ export enum MediaType {
 
 // Document interface
 export interface IMedia {
-      alt: string,
-      description: string,
-      path: string,
-      type: MediaType
+    alt: string,
+    description: string,
+    path: string,
+    type: MediaType
 }
 
 // Create Mongoose schema
