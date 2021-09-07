@@ -42,3 +42,22 @@ $dashboardNavWidth: 200px;
     position: fixed;
     margin-left: $dashboardNavWidth;
 }
+
+#mediaForm {
+    background-color: white;
+    box-shadow: 5px 5px 10px 5px darkgray;
+
+    border-radius: 12px;
+
+    margin: 50px;   
+
+    display: flex;
+    flex-direction: column;
+
+    width: 500px;
+    height: 300px;
+}
+
+#mediaForm.submitted {
+    background-color: lightgreen;
+}

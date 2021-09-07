@@ -17,7 +17,3 @@ export const EmptyMedia: IMedia = {
     path: "",
     type: MediaType.None
 }
-
-export const UploadMedia = async (media: IMedia): Promise<void> => {
-    
-}
