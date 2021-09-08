@@ -1,4 +1,4 @@
-import express, {Application, Request, Response, NextFunction, Router, request} from 'express';
+import express, { Request, Response, Router } from 'express';
 
 // Import Artist model
 import Artist, {IArtist} from "../models/Artist";

@@ -3,10 +3,7 @@ export default interface IArtist {
     name: string,
     bio: string,
     media?: [{
-        alt: string,
-        description: string,
-        path: string,
-        type: string
+        mediaId: string
     }]
 }
 

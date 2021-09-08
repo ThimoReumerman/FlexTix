@@ -11,6 +11,7 @@ import ReactPlayer from 'react-player';
 
 import { NavBarProps } from "../components/NavBar";
 import IArtist, { EmptyArtist } from '../interfaces/Artist';
+import IMedia, { MediaType } from "../interfaces/Media";
 
 export const ArtistNav: NavBarProps = {
     items: [
@@ -33,7 +34,8 @@ interface IProps {
 }
 
 interface IState {
-    artist: IArtist
+    artist: IArtist,
+    media?: IMedia[] | undefined | null
 }
 
 interface IParams {
@@ -68,17 +70,18 @@ class Artist extends Component<IProps & RouteComponentProps, IState> {
 
 
     render() {
-        const artist: IArtist = this.state.artist;
+        const artist = this.state.artist;
+        const media = this.state.media;
 
         return (
             <div id="artist">
                 <h2>{artist.name}</h2>
                 <p>{artist.bio}</p>
-                {artist.media?.map(item => {
+                {media?.map(item => {
                     switch (item.type) {
-                        case "image":
+                        case MediaType.Image:
                             return (<img src={item.path} alt={item.alt} />);
-                        case "video":
+                        case MediaType.Video:
                             return (<ReactPlayer url={item.path} />)
                         default: 
                             return (<div className="noPath" />)

@@ -8,10 +8,7 @@ export default interface IConcert {
         artistId: string
     }],
     media?: [{
-        alt: string,
-        description: string,
-        path: string,
-        type: string
+        mediaId: string
     }]
 }
 

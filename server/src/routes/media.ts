@@ -24,7 +24,7 @@ router.post("/", upload.single("upload"), async (req: Request, res: Response) =>
     // Try saving the media to the database
     try {
         const savedMedia = await media.save();
-    
+        console.log(savedMedia);
         return res.status(200).json(savedMedia);
     } catch (err) {
         return res.status(400).send("Couldn't save media.")

@@ -5,6 +5,7 @@ export enum MediaType {
 }
 
 export default interface IMedia {
+    _id?: string,
     alt: string,
     description: string,
     path: string,
