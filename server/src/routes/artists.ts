@@ -10,6 +10,9 @@ var router: Router = express.Router();
 // Create new artist
 router.post("/", async (req: Request, res: Response) => {
 
+    console.log("BODY: ");
+    console.log(req.body);
+
     // Create new artist variable
     const artist: mongoose.Document<IArtist> = new Artist(req.body);
 
@@ -19,6 +22,7 @@ router.post("/", async (req: Request, res: Response) => {
     
         return res.status(200).json(savedArtist);
     } catch (err) {
+        console.log(err);
         return res.status(400).send("Couldn't save artist.")
     }
 });

@@ -2,9 +2,9 @@ export default interface IArtist {
     _id?: string,
     name: string,
     bio: string,
-    media?: [{
+    media?: {
         mediaId: string
-    }]
+    }[]
 }
 
 export const EmptyArtist: IArtist = {

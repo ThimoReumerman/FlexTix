@@ -1,6 +1,6 @@
-import { Component, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import apiLink from "../../api";
 
 import IArtist, { EmptyArtist } from "../../interfaces/Artist";
@@ -16,63 +16,85 @@ interface IProps {
 
 const ArtistForm: React.FC<IProps> = ({ _id }) => {
   const [artist, setArtist] = useState<IArtist>();
-  const [media, setMedia] = useState<IMedia[]>();
+  const [media, setMedia] = useState<IMedia[]>(new Array<IMedia>(EmptyMedia));
 
   const { register, handleSubmit } = useForm<IArtist>();
 
+  // Initialize the form values
   useEffect(() => {
     const initialize = async () => {
-        console.log("Initializing form...");
-    
-        let exists: boolean = false;
-    
-        // Get artist if ID exists
-        if (_id) {
-          // Fetch artist data
-          const artistResponse: AxiosResponse<IArtist> = await axios.get(
-            `${apiLink}/artists/${_id}`
+      console.log("Initializing artist form...");
+
+      let exists: boolean = false;
+
+      // Get artist if ID exists
+      if (_id) {
+        // Fetch artist data
+        const artistResponse: AxiosResponse<IArtist> = await axios.get(
+          `${apiLink}/artists/${_id}`
+        );
+
+        // Return if artist data is null
+        if (artistResponse.data == null) return;
+
+        // If not null, you can say the artist exists
+        exists = true;
+
+        // Set state of artist to fetched data
+        setArtist(artistResponse.data);
+
+        // Create media array
+        let mediaArray: IMedia[] = new Array<IMedia>();
+
+        // Loop through media items to get the actual media information
+        artistResponse.data.media?.forEach(async (media) => {
+          // Fetch media data from database
+          const mediaResponse: AxiosResponse<IMedia> = await axios.get(
+            `${apiLink}/media/${media.mediaId}`
           );
-    
-          // Return if artist data is null
-          if (artistResponse.data == null) return;
-    
-          // If not null, you can say the artist exists
-          exists = true;
-    
-          // Set state of artist to fetched data
-          setArtist(artistResponse.data);
-    
-          // Create media array
-          let mediaArray: IMedia[] = new Array<IMedia>();
-    
-          // Loop through media items to get the actual media information
-          artistResponse.data.media?.forEach(async (media) => {
-            // Fetch media data from database
-            const mediaResponse: AxiosResponse<IMedia> = await axios.get(
-              `${apiLink}/media/${media.mediaId}`
-            );
-    
-            // Push new media data to media array
-            mediaArray.push(mediaResponse?.data);
-          });
-    
-          if (mediaArray.length === 0) mediaArray.push(EmptyMedia);
-    
-          // Set the new media array in the media state
-          setMedia(mediaArray);
-        }
-    
-        if (!exists) {
-          setArtist(EmptyArtist);
-        }
+
+          // Push new media data to media array
+          mediaArray.push(mediaResponse?.data);
+        });
+
+        if (mediaArray.length === 0) mediaArray.push(EmptyMedia);
+
+        // Set the new media array in the media state
+        setMedia(mediaArray);
       }
 
-      initialize();
+      if (!exists) {
+        setArtist(EmptyArtist);
+      }
+    };
+
+    initialize();
   });
 
   const onSubmit: SubmitHandler<IArtist> = (data) => {
+    // Create array out of media ID's
+    const mediaIdArray: Array<string> = media!.map(
+      (m) => m._id
+    ) as Array<string>;
 
-  }
+    // Set media to newly created array
+    data.media = mediaIdArray.map((m) => {
+      return { mediaId: m };
+    });
+
+    console.log("Sending following data");
+    console.log(data);
+
+    // Send artist to back-end
+    axios
+      .post(`${apiLink}/artists`, data)
+      .then((response: AxiosResponse<IArtist>) => {
+        alert(`Successfully added artist ${response.data.name}`);
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+      });
+  };
 
   const addMedia = (m: IMedia) => {
     // Log message to console
@@ -87,6 +109,8 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
     // Add new media item
     newMedia.push(m);
 
+    console.log(newMedia);
+
     // Set media array state to the new array
     setMedia(newMedia);
   };
@@ -97,6 +121,7 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
         <label>
           Name
           <input
+            {...register("name")}
             id="artistName"
             type="text"
             name="name"
@@ -105,7 +130,12 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
         </label>
         <label>
           Bio
-          <textarea id="artistBio" name="bio" defaultValue={artist?.bio} />
+          <textarea
+            {...register("bio")}
+            id="artistBio"
+            name="bio"
+            defaultValue={artist?.bio}
+          />
         </label>
         <label>
           Submit
