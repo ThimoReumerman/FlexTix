@@ -78,7 +78,7 @@ const MediaForm: FC<IProps> = ({media, onMediaSubmit}) => {
             <label>
                 Media
                 <input {...register("uploadList")} id="upload" type="File" accept="image/*, video/*" />
-                {media?.path && <img src={media.path} alt={media.alt} />}
+                {media?.path && <img width="250px" src={media.path} alt={media.alt} />}
             </label>
             <label>
                 Submit
