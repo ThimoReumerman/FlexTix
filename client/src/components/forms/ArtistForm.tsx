@@ -17,7 +17,7 @@ interface IProps {
 const ArtistForm: React.FC<IProps> = ({ _id }) => {
   const [artist, setArtist] = useState<IArtist>();
   const [media, setMedia] = useState<IMedia[]>(new Array<IMedia>());
-  const [mediaForms, setMediaForms] = useState<string[]>(new Array<string>(""));
+  const [mediaForms, setMediaForms] = useState<null[]>(new Array<null>());
 
   console.log(`Media forms has length ${mediaForms.length} `)
   console.log(mediaForms);
@@ -126,7 +126,7 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
     let newArr = mediaForms;
     newArr.push(null);
 
-    setMediaForms(newArr);
+    setMediaForms([...newArr]);
 
     console.log("New state:");  
     console.log(mediaForms);
@@ -159,24 +159,26 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
           <input id="submitArtist" type="submit" />
         </label>
       </form>
-      {mediaForms.map(() => {
-        console.log("Mapping");
-        return (
-        <MediaForm onMediaSubmit={(media: IMedia) => addMedia(media)} />)
-      })}
-      {media?.map((m) => {
-        return (
-          <MediaForm
-            media={m}
-            onMediaSubmit={(media: IMedia) => addMedia(media)}
-          />
-        );
-      })}
-      <button
-        onClick={addEmptyMediaForm}
-      >
-        Add media
-      </button>
+      <div id="mediaForms">
+        {mediaForms.map(() => {
+          console.log("Mapping");
+          return (
+          <MediaForm onMediaSubmit={(media: IMedia) => addMedia(media)} />)
+        })}
+        {media?.map((m) => {
+          return (
+            <MediaForm
+              media={m}
+              onMediaSubmit={(media: IMedia) => addMedia(media)}
+            />
+          );
+        })}
+        <button
+          onClick={addEmptyMediaForm}
+        >
+          Add media
+        </button>
+      </div>
     </div>
   );
 };

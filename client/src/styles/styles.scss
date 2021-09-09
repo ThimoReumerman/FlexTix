@@ -61,3 +61,11 @@ $dashboardNavWidth: 200px;
 #mediaForm.submitted {
     background-color: lightgreen;
 }
+
+#mediaForms {
+
+    height: 700px;
+    overflow: scroll;
+
+    margin: 10px;
+}
