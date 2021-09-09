@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import axios, { AxiosResponse, AxiosError } from "axios";
 import apiLink from "../../api";
 
 import IArtist, { EmptyArtist } from "../../interfaces/Artist";
-import IMedia, { EmptyMedia } from "../../interfaces/Media";
+import IMedia from "../../interfaces/Media";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -16,7 +16,11 @@ interface IProps {
 
 const ArtistForm: React.FC<IProps> = ({ _id }) => {
   const [artist, setArtist] = useState<IArtist>();
-  const [media, setMedia] = useState<IMedia[]>(new Array<IMedia>(EmptyMedia));
+  const [media, setMedia] = useState<IMedia[]>(new Array<IMedia>());
+  const [mediaForms, setMediaForms] = useState<string[]>(new Array<string>(""));
+
+  console.log(`Media forms has length ${mediaForms.length} `)
+  console.log(mediaForms);
 
   const { register, handleSubmit } = useForm<IArtist>();
 
@@ -56,8 +60,6 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
           // Push new media data to media array
           mediaArray.push(mediaResponse?.data);
         });
-
-        if (mediaArray.length === 0) mediaArray.push(EmptyMedia);
 
         // Set the new media array in the media state
         setMedia(mediaArray);
@@ -103,6 +105,8 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
     // Add new media array
     let newMedia: IMedia[] = media!;
 
+    console.log(media);
+
     // Remove last media item (which is empty)
     newMedia.pop();
 
@@ -114,6 +118,19 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
     // Set media array state to the new array
     setMedia(newMedia);
   };
+
+  const addEmptyMediaForm = () => {
+    console.log("Changing state...");
+    console.log("Old state:")
+    console.log(mediaForms);
+    let newArr = mediaForms;
+    newArr.push(null);
+
+    setMediaForms(newArr);
+
+    console.log("New state:");  
+    console.log(mediaForms);
+  }
 
   return (
     <div>
@@ -142,6 +159,11 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
           <input id="submitArtist" type="submit" />
         </label>
       </form>
+      {mediaForms.map(() => {
+        console.log("Mapping");
+        return (
+        <MediaForm onMediaSubmit={(media: IMedia) => addMedia(media)} />)
+      })}
       {media?.map((m) => {
         return (
           <MediaForm
@@ -151,9 +173,7 @@ const ArtistForm: React.FC<IProps> = ({ _id }) => {
         );
       })}
       <button
-        onClick={() => {
-          addMedia(EmptyMedia);
-        }}
+        onClick={addEmptyMediaForm}
       >
         Add media
       </button>

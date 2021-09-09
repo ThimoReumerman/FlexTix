@@ -1,56 +1,39 @@
-import { Component } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-
+import { useEffect } from "react";
 import { NavBarProps } from "../components/NavBar";
 import ArtistForm from "../components/forms/ArtistForm";
 
 export const DashboardNav: NavBarProps = {
-    items: [
-        {
-            href: "/home",
-            title: "Home"
-        }
-    ]
-}
+  items: [
+    {
+      href: "/home",
+      title: "Home",
+    },
+  ],
+};
 
 interface IProps {
-    navHandler: (nav: NavBarProps) => void
+  navHandler: (nav: NavBarProps) => void;
 }
 
-interface IState {
-    
-}
+const Dashboard: React.FC<IProps> = ({ navHandler }) => {
+  console.log("Creating dashboard");
 
-class LastMinute extends Component<IProps & RouteComponentProps, IState> {
-    async componentDidMount() {
+  useEffect(() => {
+    const initialize = () => {
+      navHandler(DashboardNav);
+    };
 
-        console.log("Component did mount.");
+    initialize();
+  });
 
-        // Set navigation bar
-        this.props.navHandler(DashboardNav);
+  return (
+    <div id="dashboard">
+      <div id="dashboardNav"></div>
+      <div id="dashboardContent">
+        <ArtistForm />
+      </div>
+    </div>
+  );
+};
 
-        // // Fetch concerts
-        // const response: AxiosResponse<IConcert[]> = await axios.get(`${apiLink}/concerts/`);
-
-        // console.log(response);
-
-        // // Put artist in state
-        // this.setState({concerts: response.data});
-
-    }
-
-    render() {
-        return (
-            <div id="dashboard">
-                <div id="dashboardNav">
-                    
-                </div>
-                <div id="dashboardContent">
-                    <ArtistForm />  
-                </div>
-            </div>
-        )
-    }
-}
-
-export default withRouter(LastMinute);
+export default Dashboard;
